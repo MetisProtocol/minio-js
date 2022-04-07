@@ -492,6 +492,9 @@ export class Client {
         response.on('data', ()=>{})
         cb(null)
       })
+      req.setTimeout(options.timeout || 180000, () => {
+        req.abort()
+      })
       let pipe = pipesetup(stream, req)
       pipe.on('error', e => {
         this.logHTTP(reqOptions, null, e)
